@@ -1,7 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user.routes');
-const User = require('./models/user.model');
 require('dotenv').config();
 
 const app = express();
@@ -18,11 +17,6 @@ app.get('/', (req, res) => {
     res.send('Hello from node!');
 });
 
-
-
-
-
-
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log('Connected!');
@@ -30,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI)
             console.log('Server is running on port 3000');
         });
     })
-    .catch(() => {
-        console.log('Not Connected!');
+    .catch((error) => {
+        console.log('Database connection failed:', error.message);
+        process.exit(1);
     })

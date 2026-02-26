@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find({});
+        const users = await User.find({}).select('-Password');
         res.status(200).json(users)
     } catch (error) {
         res.status(500).json({ message: 'Error fetching users', error: error.message });
@@ -12,7 +12,7 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const users = await User.findById(id);
+        const users = await User.findById(id).select('-Password');
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching user by id', error: error.message });
@@ -38,7 +38,7 @@ const updateUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const updatedUser = await User.findById(id);
+        
         res.status(200).json({ message: 'User updated successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error updating user', error: error.message });
