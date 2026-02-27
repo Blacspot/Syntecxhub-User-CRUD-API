@@ -5,6 +5,7 @@ const authRoutes = require('./routes/auth.routes');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 8081;
 
 //middleware
 app.use(express.json());
@@ -22,8 +23,8 @@ app.get('/', (req, res) => {
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log('Connected!');
-        app.listen(3000, () => {
-            console.log('Server is running on port 3000');
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
         });
     })
     .catch((error) => {
