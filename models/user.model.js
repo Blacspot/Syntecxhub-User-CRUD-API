@@ -20,6 +20,12 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please enter your password']
     },
+    // Add this field to userSchema
+    username: {
+        type: String,
+        required: [true, 'Please enter a username'],
+        unique: true
+    },
 },
     {
         timestamps: true
@@ -27,8 +33,8 @@ const userSchema = mongoose.Schema({
 );
 
 userSchema.pre('save', async function() {
-    if (!this.isModified('Password')) return;
-    this.Password = await bcrypt.hash(this.Password, 10);
+    if (!this.isModified('password')) return;
+    this.password = await bcrypt.hash(this.password, 10);
 });
 
 const User = mongoose.model('User', userSchema);

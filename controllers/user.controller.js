@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find({}).select('-Password');
+        const users = await User.find({}).select('-password');
         res.status(200).json(users)
     } catch (error) {
         res.status(500).json({ message: 'Error fetching users', error: error.message });
@@ -12,8 +12,8 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const users = await User.findById(id).select('-Password');
-        res.status(200).json(users);
+        const user = await User.findById(id).select('-password');
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching user by id', error: error.message });
     }
